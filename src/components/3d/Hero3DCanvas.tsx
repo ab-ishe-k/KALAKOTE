@@ -7,6 +7,7 @@ export const Hero3DCanvas: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const motion = useDeviceMotion();
   const [motionMode, setMotionMode] = useState<boolean>(true);
+  const [hasWebGL, setHasWebGL] = useState<boolean>(true);
 
   // References for Three.js objects
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -23,6 +24,19 @@ export const Hero3DCanvas: React.FC = () => {
     const width = container.clientWidth;
     const height = container.clientHeight;
 
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (e) {
+      console.warn('WebGL is unavailable in this environment, falling back to CSS canvas:', e);
+      setHasWebGL(false);
+      return;
+    }
+
     // 1. Scene
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x080B09, 0.035);
@@ -34,12 +48,7 @@ export const Hero3DCanvas: React.FC = () => {
     camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
 
-    // 3. WebGL Renderer
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance'
-    });
+    // 3. WebGL Renderer configuration
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -212,8 +221,18 @@ export const Hero3DCanvas: React.FC = () => {
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-auto overflow-hidden">
-      {/* Three.js Canvas Container */}
-      <div ref={mountRef} className="w-full h-full" />
+      {/* Three.js Canvas Container or SVG Fallback */}
+      {hasWebGL ? (
+        <div ref={mountRef} className="w-full h-full" />
+      ) : (
+        <div className="w-full h-full bg-gradient-to-b from-[#111713] via-[#0E1410] to-[#080B09] flex items-center justify-center">
+          <svg className="w-full h-full opacity-30" viewBox="0 0 1440 900" preserveAspectRatio="none">
+            <path d="M0 450 Q360 280 720 420 T1440 380 L1440 900 L0 900 Z" fill="#20392C" />
+            <path d="M0 560 Q400 440 850 540 T1440 500 L1440 900 L0 900 Z" fill="#172b21" />
+            <path d="M0 690 Q500 600 1000 670 T1440 640 L1440 900 L0 900 Z" fill="#080b09" />
+          </svg>
+        </div>
+      )}
 
       {/* Sensor Calibration & Status Badge (Top Right of Hero) */}
       <div className="absolute top-24 right-4 sm:right-8 z-20 flex flex-col items-end gap-2 font-mono text-[11px]">

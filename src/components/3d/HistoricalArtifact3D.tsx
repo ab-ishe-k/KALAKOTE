@@ -84,6 +84,7 @@ export const HistoricalArtifact3D: React.FC<HistoricalArtifact3DProps> = ({
   const [wireframeMode, setWireframeMode] = useState<boolean>(false);
   const [lightingPreset, setLightingPreset] = useState<'museum' | 'studio'>('museum');
   const [gyroActive, setGyroActive] = useState<boolean>(true);
+  const [hasWebGL, setHasWebGL] = useState<boolean>(true);
 
   const mountRef = useRef<HTMLDivElement>(null);
   const motion = useDeviceMotion();
@@ -331,11 +332,19 @@ export const HistoricalArtifact3D: React.FC<HistoricalArtifact3DProps> = ({
     camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance'
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (e) {
+      console.warn('WebGL is unavailable for Artifact Inspector:', e);
+      setHasWebGL(false);
+      return;
+    }
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -472,15 +481,25 @@ export const HistoricalArtifact3D: React.FC<HistoricalArtifact3DProps> = ({
     <div className="w-full bg-[#080B09] rounded-2xl border border-[#C5A56A]/30 overflow-hidden shadow-2xl flex flex-col lg:flex-row">
       {/* Left/Main: 3D Interactive Viewport */}
       <div className="relative w-full lg:w-3/5 h-[500px] sm:h-[600px] bg-gradient-to-b from-[#111713] to-[#080B09] select-none cursor-grab active:cursor-grabbing">
-        {/* Three.js Canvas */}
-        <div
-          ref={mountRef}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerUp}
-          className="w-full h-full"
-        />
+        {/* Three.js Canvas or Fallback */}
+        {hasWebGL ? (
+          <div
+            ref={mountRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+            className="w-full h-full"
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center space-y-4">
+            <Box className="w-16 h-16 text-[#C5A56A]/50 animate-pulse" />
+            <h4 className="text-lg font-serif text-[#F4F1E8]">{metadata.name}</h4>
+            <p className="max-w-md text-xs font-mono text-[#A4ADA5]">
+              Hardware 3D rendering unavailable on this device. Full verified archival specifications and historical documentation are available in the dossier panel.
+            </p>
+          </div>
+        )}
 
         {/* Top Floating Controls */}
         <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">

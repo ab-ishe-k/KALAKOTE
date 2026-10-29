@@ -4,6 +4,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { SearchModal } from './components/search/SearchModal';
 import { SourceModal } from './components/common/SourceModal';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // Pages
 import { Home } from './pages/Home';
@@ -51,35 +52,37 @@ export function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <div className="min-h-screen bg-[#080B09] text-[#F4F1E8] flex flex-col font-sans selection:bg-[#C5A56A]/30 selection:text-[#F4F1E8]">
         {/* Navigation */}
         <Navbar onOpenSearch={() => setIsSearchOpen(true)} />
 
-        {/* Page Content */}
+        {/* Page Content Wrapped in ErrorBoundary */}
         <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/time-machine" element={<TimeMachine onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/history" element={<History onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/mining" element={<Mining onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/thermal-station" element={<ThermalPlant onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/map" element={<AtlasMap onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/administration" element={<Administration onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/heritage" element={<Heritage onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/artifacts-3d" element={<Artifacts3D onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/artifacts" element={<Artifacts3D onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/built-changed-lost" element={<BuiltChangedLost onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/development" element={<Development />} />
-            <Route path="/myths" element={<MythsEvidence />} />
-            <Route path="/people" element={<PeopleOralHistory />} />
-            <Route path="/archive" element={<ArchivePage onOpenSourceModal={setActiveSourceId} />} />
-            <Route path="/methodology" element={<Methodology />} />
-            <Route path="/about" element={<About />} />
-            {/* Catch-all fallback */}
-            <Route path="*" element={<Home onOpenSourceModal={setActiveSourceId} />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<Home onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/time-machine" element={<TimeMachine onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/history" element={<History onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/mining" element={<Mining onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/thermal-station" element={<ThermalPlant onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/map" element={<AtlasMap onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/administration" element={<Administration onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/heritage" element={<Heritage onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/artifacts-3d" element={<Artifacts3D onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/artifacts" element={<Artifacts3D onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/built-changed-lost" element={<BuiltChangedLost onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/development" element={<Development />} />
+              <Route path="/myths" element={<MythsEvidence />} />
+              <Route path="/people" element={<PeopleOralHistory />} />
+              <Route path="/archive" element={<ArchivePage onOpenSourceModal={setActiveSourceId} />} />
+              <Route path="/methodology" element={<Methodology />} />
+              <Route path="/about" element={<About />} />
+              {/* Catch-all fallback */}
+              <Route path="*" element={<Home onOpenSourceModal={setActiveSourceId} />} />
+            </Routes>
+          </ErrorBoundary>
         </main>
 
         {/* Global Footer */}
