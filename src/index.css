@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #080B09;
+  color: #F4F1E8;
+  overflow-x: hidden;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080B09;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #20392C;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A56A;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle cinematic atmospheric grain */
+.film-grain {
+  background-image: radial-gradient(rgba(197, 165, 106, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Editorial Serif Headings */
+h1, h2, h3, .font-serif-heading {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
