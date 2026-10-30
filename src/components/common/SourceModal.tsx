@@ -14,22 +14,22 @@ export const SourceModal: React.FC<SourceModalProps> = ({ sourceId, onClose }) =
   const source = SOURCES_DATA.find(s => s.id === sourceId);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-2xl bg-[#111713] border border-[#C5A56A]/30 rounded-lg shadow-2xl p-6 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-2xl bg-[#111713] border border-[#C5A56A]/30 rounded-xl shadow-2xl p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-start justify-between border-b border-white/10 pb-4">
+        <div className="flex items-start justify-between border-b border-white/10 pb-3 sm:pb-4 gap-2">
           <div className="space-y-1">
-            <span className="text-xs font-mono text-[#C5A56A] uppercase tracking-widest flex items-center gap-1.5">
-              <BookOpen className="w-3.5 h-3.5" />
+            <span className="text-[10px] sm:text-xs font-mono text-[#C5A56A] uppercase tracking-widest flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 shrink-0" />
               Primary Archival Record &bull; {sourceId}
             </span>
-            <h3 className="text-xl font-serif font-bold text-[#F4F1E8]">
+            <h3 className="text-lg sm:text-xl font-serif font-bold text-[#F4F1E8] leading-snug">
               {source ? source.title : 'Source Record Not Located'}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+            className="p-1.5 text-white/60 hover:text-white hover:bg-white/10 rounded-md transition-colors shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />

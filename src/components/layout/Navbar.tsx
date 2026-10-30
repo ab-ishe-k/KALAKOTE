@@ -16,12 +16,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#080B09]/95 backdrop-blur-md border-b border-white/10 transition-all">
       {/* Editorial Top Disclaimer Bar */}
-      <div className="bg-[#111713] text-[#A4ADA5] text-[11px] font-mono py-1 px-4 border-b border-white/5 flex items-center justify-between">
-        <span className="flex items-center gap-1.5 text-amber-400/90 truncate">
+      <div className="bg-[#111713] text-[#A4ADA5] text-[10px] sm:text-[11px] font-mono py-1 px-3 sm:px-4 border-b border-white/5 flex items-center justify-between">
+        <span className="flex items-center gap-1.5 text-amber-400/90 truncate mr-2">
           <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-          <span className="hidden sm:inline">Non-Governmental Initiative:</span> Independent Historical Archive &bull; Rajouri, Jammu & Kashmir
+          <span className="hidden sm:inline">Non-Governmental Initiative:</span> Independent Historical Archive &bull; Rajouri, J&amp;K
         </span>
-        <span className="hidden md:inline text-white/50">
+        <span className="hidden md:inline text-white/50 shrink-0">
           Historical Scope: Earliest Records &ndash; October 2026
         </span>
       </div>
@@ -221,7 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#111713] border-b border-white/10 px-4 pt-2 pb-6 space-y-2 animate-fadeIn text-sm font-mono">
+        <div className="lg:hidden bg-[#111713] border-b border-white/10 px-4 pt-2 pb-6 space-y-1 animate-fadeIn text-sm font-mono max-h-[calc(100vh-5rem)] overflow-y-auto">
           <Link
             to="/history"
             onClick={() => setMobileMenuOpen(false)}

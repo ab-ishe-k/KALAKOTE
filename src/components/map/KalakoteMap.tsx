@@ -196,21 +196,21 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
   }, [selectedLocationId]);
 
   return (
-    <div className="relative w-full h-[620px] rounded-xl overflow-hidden border border-[#C5A56A]/30 bg-[#080B09] shadow-2xl">
-      {/* Top Left: Category Filter Controls */}
-      <div className="absolute top-4 left-4 z-[400] flex flex-wrap gap-1.5 p-1.5 bg-[#111713]/90 backdrop-blur-md rounded-lg border border-white/10 shadow-lg text-xs font-mono max-w-[calc(100%-120px)] sm:max-w-none">
+    <div className="relative w-full h-[480px] sm:h-[620px] rounded-xl overflow-hidden border border-[#C5A56A]/30 bg-[#080B09] shadow-2xl">
+      {/* Top Left: Category Filter Controls (Scrollable row on mobile, no wrapping overlap) */}
+      <div className="absolute top-3 left-3 right-20 sm:right-auto sm:left-4 sm:top-4 z-[400] flex items-center gap-1.5 p-1 sm:p-1.5 bg-[#111713]/95 backdrop-blur-md rounded-lg border border-white/10 shadow-lg text-xs font-mono overflow-x-auto no-scrollbar whitespace-nowrap">
         <button
           onClick={() => setActiveCategory('ALL')}
-          className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded transition-colors flex items-center gap-1.5 shrink-0 ${
             activeCategory === 'ALL' ? 'bg-[#C5A56A] text-black font-semibold shadow' : 'text-[#A4ADA5] hover:text-white'
           }`}
         >
           <Layers className="w-3.5 h-3.5" />
-          <span>All Layers</span>
+          <span>All</span>
         </button>
         <button
           onClick={() => setActiveCategory('MINES')}
-          className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded transition-colors flex items-center gap-1.5 shrink-0 ${
             activeCategory === 'MINES' ? 'bg-[#C5A56A] text-black font-semibold shadow' : 'text-[#A4ADA5] hover:text-white'
           }`}
         >
@@ -219,51 +219,51 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
         </button>
         <button
           onClick={() => setActiveCategory('THERMAL')}
-          className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded transition-colors flex items-center gap-1.5 shrink-0 ${
             activeCategory === 'THERMAL' ? 'bg-[#C5A56A] text-black font-semibold shadow' : 'text-[#A4ADA5] hover:text-white'
           }`}
         >
           <Flame className="w-3.5 h-3.5" />
-          <span>Thermal Station</span>
+          <span>Thermal</span>
         </button>
         <button
           onClick={() => setActiveCategory('HERITAGE')}
-          className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded transition-colors flex items-center gap-1.5 shrink-0 ${
             activeCategory === 'HERITAGE' ? 'bg-[#C5A56A] text-black font-semibold shadow' : 'text-[#A4ADA5] hover:text-white'
           }`}
         >
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Heritage & Springs</span>
+          <span>Heritage</span>
         </button>
         <button
           onClick={() => setActiveCategory('ADMIN')}
-          className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded transition-colors flex items-center gap-1.5 shrink-0 ${
             activeCategory === 'ADMIN' ? 'bg-[#C5A56A] text-black font-semibold shadow' : 'text-[#A4ADA5] hover:text-white'
           }`}
         >
           <Building className="w-3.5 h-3.5" />
-          <span>Administrative</span>
+          <span>Admin</span>
         </button>
       </div>
 
       {/* Top Right: OpenFreeMap Theme Switcher */}
-      <div className="absolute top-4 right-4 z-[400]">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[400]">
         <div className="relative">
           <button
             onClick={() => setIsStyleMenuOpen(!isStyleMenuOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 bg-[#111713]/90 hover:bg-[#161F1A] backdrop-blur-md rounded-lg border border-[#C5A56A]/40 text-[#C5A56A] font-mono text-xs shadow-lg transition-colors"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-[#111713]/90 hover:bg-[#161F1A] backdrop-blur-md rounded-lg border border-[#C5A56A]/40 text-[#C5A56A] font-mono text-xs shadow-lg transition-colors"
             title="Switch OpenFreeMap style"
           >
             <Compass className="w-3.5 h-3.5" />
             <span className="hidden sm:inline font-semibold">{OPENFREEMAP_STYLES[mapTheme].name}</span>
-            <span className="sm:hidden font-semibold">Theme</span>
+            <span className="sm:hidden font-semibold text-[11px]">Map</span>
           </button>
 
           {isStyleMenuOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-[#111713] rounded-lg border border-[#C5A56A]/30 shadow-2xl p-2 font-mono text-xs space-y-1 animate-fadeIn">
+            <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-[#111713] rounded-lg border border-[#C5A56A]/30 shadow-2xl p-2 font-mono text-xs space-y-1 animate-fadeIn">
               <div className="px-2 py-1 text-[10px] uppercase text-[#A4ADA5] tracking-wider border-b border-white/10 flex items-center justify-between">
-                <span>OpenFreeMap Style</span>
-                <span className="text-emerald-400 font-bold">100% Free API</span>
+                <span>Map Style</span>
+                <span className="text-emerald-400 font-bold">Free OFM</span>
               </div>
               {(Object.keys(OPENFREEMAP_STYLES) as MapTheme[]).map((key) => {
                 const item = OPENFREEMAP_STYLES[key];
@@ -274,7 +274,7 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
                       setMapTheme(key);
                       setIsStyleMenuOpen(false);
                     }}
-                    className={`w-full text-left px-2 py-2 rounded transition-colors flex flex-col ${
+                    className={`w-full text-left px-2 py-1.5 rounded transition-colors flex flex-col ${
                       mapTheme === key ? 'bg-[#C5A56A]/20 text-[#C5A56A] font-semibold' : 'text-[#A4ADA5] hover:bg-white/5 hover:text-white'
                     }`}
                   >
@@ -303,7 +303,7 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
 
       {/* Selected Location Card Overlay */}
       {selectedLoc && (
-        <div className="absolute bottom-12 right-4 left-4 sm:left-auto sm:max-w-sm z-[400] bg-[#111713]/95 backdrop-blur-md p-4 rounded-xl border border-[#C5A56A]/40 shadow-2xl animate-fadeIn space-y-3">
+        <div className="absolute bottom-9 left-3 right-3 sm:left-auto sm:right-4 sm:bottom-12 sm:max-w-sm z-[400] max-h-[55vh] overflow-y-auto bg-[#111713]/95 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-[#C5A56A]/40 shadow-2xl animate-fadeIn space-y-2.5">
           <div className="flex items-start justify-between">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider text-[#C5A56A] px-2 py-0.5 rounded bg-white/5 border border-white/10">
@@ -313,7 +313,8 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
             </div>
             <button
               onClick={() => setSelectedLoc(null)}
-              className="text-white/50 hover:text-white text-sm p-1"
+              className="text-white/60 hover:text-white p-1 rounded hover:bg-white/10 text-sm"
+              aria-label="Close location card"
             >
               &times;
             </button>
@@ -339,7 +340,7 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
 
           {selectedLoc.sourceIds.length > 0 && onOpenSourceModal && (
             <div className="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
-              <span className="text-white/50 font-mono">Source Evidence:</span>
+              <span className="text-white/50 font-mono text-[11px]">Source Evidence:</span>
               <button
                 onClick={() => onOpenSourceModal(selectedLoc.sourceIds[0])}
                 className="text-[#C5A56A] hover:underline font-mono text-xs"
@@ -352,9 +353,9 @@ export const KalakoteMap: React.FC<KalakoteMapProps> = ({
       )}
 
       {/* Attribution & Precision Disclaimer */}
-      <div className="absolute bottom-2 left-2 z-[400] text-[10px] font-mono text-white/60 bg-black/75 backdrop-blur-sm px-2.5 py-1 rounded border border-white/10 flex items-center gap-2">
-        <Globe className="w-3 h-3 text-[#C5A56A]" />
-        <span>Base Layer: <a href="https://openfreemap.org" target="_blank" rel="noreferrer" className="text-[#C5A56A] underline">OpenFreeMap</a> (MapLibre vector tiles &bull; No API Key &bull; Free) &bull; OSM contributors</span>
+      <div className="absolute bottom-2 left-2 right-2 sm:right-auto z-[400] text-[9px] sm:text-[10px] font-mono text-white/60 bg-black/80 backdrop-blur-sm px-2.5 py-1 rounded border border-white/10 flex items-center gap-1.5 truncate">
+        <Globe className="w-3 h-3 text-[#C5A56A] shrink-0" />
+        <span className="truncate">Base: <a href="https://openfreemap.org" target="_blank" rel="noreferrer" className="text-[#C5A56A] underline">OpenFreeMap</a> &bull; OSM contributors</span>
       </div>
     </div>
   );

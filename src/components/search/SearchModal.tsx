@@ -201,27 +201,33 @@ export const SearchModal: React.FC<SearchModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/85 backdrop-blur-md">
       <div className="w-full max-w-3xl bg-[#111713] border border-[#C5A56A]/40 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
         {/* Search Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-white/10 bg-black/40">
-          <Search className="w-5 h-5 text-[#C5A56A] mr-3 shrink-0" />
+        <div className="flex items-center px-3.5 sm:px-4 py-3 sm:py-3.5 border-b border-white/10 bg-black/40">
+          <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#C5A56A] mr-2.5 sm:mr-3 shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search events, mines, thermal plant, documents, coordinates, or census records..."
+            placeholder="Search events, mines, documents, coordinates..."
             className="w-full bg-transparent text-sm sm:text-base text-[#F4F1E8] placeholder-[#A4ADA5]/60 focus:outline-none"
             autoFocus
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 text-white/50 hover:text-white mr-2"
+              className="p-1 text-white/50 hover:text-white mr-1.5"
+              aria-label="Clear search input"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <span className="hidden sm:inline-block px-2 py-0.5 text-xs font-mono text-[#C5A56A] bg-white/5 rounded border border-white/10">
-            ESC to close
-          </span>
+          <button
+            onClick={onClose}
+            className="p-1.5 sm:px-2 sm:py-0.5 text-xs font-mono text-[#C5A56A] hover:text-[#DFC38E] bg-white/5 rounded border border-white/10 flex items-center gap-1 shrink-0"
+            aria-label="Close search modal"
+          >
+            <X className="w-4 h-4 sm:hidden" />
+            <span className="hidden sm:inline">ESC</span>
+          </button>
         </div>
 
         {/* Filters */}

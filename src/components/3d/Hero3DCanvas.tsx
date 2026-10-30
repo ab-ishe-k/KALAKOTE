@@ -234,13 +234,13 @@ export const Hero3DCanvas: React.FC = () => {
         </div>
       )}
 
-      {/* Sensor Calibration & Status Badge (Top Right of Hero) */}
-      <div className="absolute top-24 right-4 sm:right-8 z-20 flex flex-col items-end gap-2 font-mono text-[11px]">
+      {/* Sensor Calibration & Status Badge (Positioned safely at bottom on mobile, top-right on desktop) */}
+      <div className="absolute bottom-4 right-4 sm:bottom-auto sm:top-24 sm:right-8 z-20 flex flex-col items-end gap-1.5 font-mono text-[11px]">
         {/* iOS Permission Prompt if needed */}
         {motion.requiresPermissionPrompt && !motion.permissionGranted && (
           <button
             onClick={() => motion.requestPermission()}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#C5A56A] text-black font-semibold shadow-lg hover:bg-white transition-all animate-bounce"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#C5A56A] text-black font-semibold shadow-lg hover:bg-white transition-all animate-bounce text-xs"
           >
             <Smartphone className="w-3.5 h-3.5" />
             <span>Enable 3D Gyroscope</span>
@@ -248,17 +248,17 @@ export const Hero3DCanvas: React.FC = () => {
         )}
 
         {/* Live Motion Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-[#C5A56A]/30 text-white/80 shadow-xl">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#C5A56A]/30 text-white/80 shadow-xl">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
           {motion.isMobile ? (
-            <span className="flex items-center gap-1.5 text-[#C5A56A]">
-              <Compass className="w-3.5 h-3.5" />
-              <span>Gyro Active: {motion.gamma > 0 ? `+${motion.gamma.toFixed(0)}°` : `${motion.gamma.toFixed(0)}°`}</span>
+            <span className="flex items-center gap-1.5 text-[#C5A56A] text-[10px] sm:text-xs">
+              <Compass className="w-3.5 h-3.5 shrink-0" />
+              <span>Gyro: {motion.gamma > 0 ? `+${motion.gamma.toFixed(0)}°` : `${motion.gamma.toFixed(0)}°`}</span>
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-[#C5A56A]">
-              <Eye className="w-3.5 h-3.5" />
-              <span>3D Parallax: Cursor Active</span>
+            <span className="flex items-center gap-1.5 text-[#C5A56A] text-[10px] sm:text-xs">
+              <Eye className="w-3.5 h-3.5 shrink-0" />
+              <span>3D Parallax Active</span>
             </span>
           )}
 
@@ -272,8 +272,8 @@ export const Hero3DCanvas: React.FC = () => {
           </button>
         </div>
 
-        {/* Subtle Hint */}
-        <span className="text-[10px] text-white/50 bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm">
+        {/* Subtle Hint - hidden on small mobile to avoid visual clutter */}
+        <span className="hidden sm:inline-block text-[10px] text-white/50 bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm">
           {motion.isMobile ? 'Tilt your device in 3D' : 'Move cursor across Pir Panjal relief'}
         </span>
       </div>

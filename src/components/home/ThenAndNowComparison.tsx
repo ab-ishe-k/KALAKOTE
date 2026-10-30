@@ -75,15 +75,16 @@ export const ThenAndNowComparison: React.FC = () => {
           </div>
 
           <div className="relative z-10 flex justify-end">
-            <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-emerald-400 border border-emerald-500/40 rounded-full font-mono text-xs flex items-center gap-1.5 shadow-lg">
-              <Calendar className="w-3.5 h-3.5" />
-              NOW &bull; October 2026 (Decommissioned & Natural Regrowth)
+            <span className="px-2.5 sm:px-3 py-1 bg-black/75 backdrop-blur-md text-emerald-400 border border-emerald-500/40 rounded-full font-mono text-[11px] sm:text-xs flex items-center gap-1.5 shadow-lg whitespace-nowrap">
+              <Calendar className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">NOW &bull; October 2026 (Decommissioned)</span>
+              <span className="sm:hidden">NOW &bull; 2026</span>
             </span>
           </div>
 
-          <div className="relative z-10 self-end max-w-xs text-right text-xs text-[#A4ADA5] bg-black/75 backdrop-blur-md p-3 rounded-lg border border-white/10">
-            <p className="text-white font-medium">Silent Sair Chimneys</p>
-            <p className="text-[11px] mt-1 text-[#A4ADA5]">
+          <div className="relative z-10 self-end max-w-[200px] sm:max-w-xs text-right text-[11px] sm:text-xs text-[#A4ADA5] bg-black/80 backdrop-blur-md p-2.5 sm:p-3 rounded-lg border border-white/10">
+            <p className="text-white font-medium text-xs sm:text-sm">Silent Sair Chimneys</p>
+            <p className="text-[10px] sm:text-[11px] mt-1 text-[#A4ADA5] line-clamp-3 sm:line-clamp-none">
               Surviving brick and concrete chimneys stand dormant amidst reclaimed pine brushwood. No active generation or steam emission.
             </p>
           </div>
@@ -94,7 +95,7 @@ export const ThenAndNowComparison: React.FC = () => {
           className="absolute inset-0 overflow-hidden bg-[#1a150e]"
           style={{ width: `${sliderPosition}%` }}
         >
-          <div className="absolute inset-0 w-[800px] sm:w-[1200px] h-full flex flex-col justify-between p-6 bg-[#16120c]">
+          <div className="absolute inset-0 w-full h-full min-w-[320px] flex flex-col justify-between p-4 sm:p-6 bg-[#16120c]">
             {/* Historical 1971 Industrial Vector Rendering */}
             <div className="absolute inset-0 opacity-90 pointer-events-none">
               <svg className="w-full h-full" viewBox="0 0 800 500" preserveAspectRatio="none">
@@ -134,15 +135,16 @@ export const ThenAndNowComparison: React.FC = () => {
             </div>
 
             <div className="relative z-10 flex justify-start">
-              <span className="px-3 py-1 bg-black/80 backdrop-blur-md text-[#C5A56A] border border-[#C5A56A]/50 rounded-full font-mono text-xs flex items-center gap-1.5 shadow-lg">
-                <Camera className="w-3.5 h-3.5" />
-                THEN &bull; c. 1971 (Commissioned Peak Generation)
+              <span className="px-2.5 sm:px-3 py-1 bg-black/80 backdrop-blur-md text-[#C5A56A] border border-[#C5A56A]/50 rounded-full font-mono text-[11px] sm:text-xs flex items-center gap-1.5 shadow-lg whitespace-nowrap">
+                <Camera className="w-3.5 h-3.5 shrink-0" />
+                <span className="hidden sm:inline">THEN &bull; c. 1971 (Commissioned Generation)</span>
+                <span className="sm:hidden">THEN &bull; 1971</span>
               </span>
             </div>
 
-            <div className="relative z-10 max-w-xs text-xs text-[#A4ADA5] bg-black/80 backdrop-blur-md p-3 rounded-lg border border-white/10">
-              <p className="text-white font-medium">Active 22.5 MW Generation</p>
-              <p className="text-[11px] mt-1 text-[#A4ADA5]">
+            <div className="relative z-10 max-w-[200px] sm:max-w-xs text-xs text-[#A4ADA5] bg-black/80 backdrop-blur-md p-2.5 sm:p-3 rounded-lg border border-white/10">
+              <p className="text-white font-medium text-xs sm:text-sm">Active 22.5 MW Generation</p>
+              <p className="text-[10px] sm:text-[11px] mt-1 text-[#A4ADA5] line-clamp-3 sm:line-clamp-none">
                 Three Skoda 7.5 MW turbogenerators synchronized with Jammu grid; active coal hopper conveyors from Ber-Goa adits.
               </p>
             </div>

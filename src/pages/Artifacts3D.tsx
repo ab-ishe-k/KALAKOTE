@@ -15,21 +15,21 @@ export const Artifacts3D: React.FC<Artifacts3DProps> = ({ onOpenSourceModal }) =
     <div className="min-h-screen bg-[#080B09] text-[#F4F1E8] pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
       {/* Editorial Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-[#C5A56A] px-2.5 py-1 rounded bg-[#C5A56A]/10 border border-[#C5A56A]/30">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#C5A56A] px-2.5 py-1 rounded bg-[#C5A56A]/10 border border-[#C5A56A]/30">
             3D DIGITAL ARCHIVE & INDUSTRIAL MUSEUM
           </span>
-          <span className="flex items-center gap-1 text-emerald-400 font-mono text-xs">
+          <span className="flex items-center gap-1 text-emerald-400 font-mono text-[10px] sm:text-xs">
             <ShieldCheck className="w-3.5 h-3.5" />
             HISTORICAL RECONSTRUCTIONS
           </span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-serif font-bold text-[#F4F1E8] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#F4F1E8] tracking-tight leading-tight">
           Machinery, Relics & Sacred Stone in 3D
         </h1>
 
-        <p className="text-base sm:text-lg text-[#A4ADA5] leading-relaxed">
+        <p className="text-sm sm:text-lg text-[#A4ADA5] leading-relaxed">
           Interactive digital reconstructions of Kalakote’s industrial turbo-machinery, underground coal safety apparatus, and medieval Kashmiri stone temple architecture. Powered by WebGL Three.js and real-time physical device gyroscope tracking.
         </p>
       </div>

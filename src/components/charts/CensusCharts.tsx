@@ -21,7 +21,7 @@ export const CensusCharts: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-[#111713] p-1 rounded-lg border border-white/10 text-xs font-mono">
+        <div className="flex items-center gap-2 bg-[#111713] p-1 rounded-lg border border-white/10 text-xs font-mono self-start sm:self-auto shrink-0">
           <button
             onClick={() => setViewMode('VISUAL')}
             className={`px-3 py-1.5 rounded transition-colors flex items-center gap-1.5 ${
@@ -176,8 +176,8 @@ export const CensusCharts: React.FC = () => {
         </div>
       ) : (
         /* Full Data Table */
-        <div className="overflow-x-auto rounded-xl border border-white/10 bg-[#111713]">
-          <table className="w-full text-left text-xs text-[#A4ADA5]">
+        <div className="overflow-x-auto rounded-xl border border-white/10 bg-[#111713] scrollbar-thin">
+          <table className="w-full min-w-[640px] text-left text-xs text-[#A4ADA5]">
             <thead className="bg-black/60 text-[#C5A56A] font-mono uppercase text-[11px] border-b border-white/10">
               <tr>
                 <th className="p-3">Indicator</th>

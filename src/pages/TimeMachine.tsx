@@ -217,33 +217,33 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
       }`}
     >
       {/* Top Header Controls Bar */}
-      <div className="relative z-20 flex flex-wrap items-center justify-between gap-4 bg-black/60 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-2xl">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-[#20392C] text-[#C5A56A] flex items-center justify-center border border-[#C5A56A]/40 shadow-inner">
-            <Sparkles className="w-5 h-5 animate-pulse" />
+      <div className="relative z-20 flex flex-wrap items-center justify-between gap-3 sm:gap-4 bg-black/60 backdrop-blur-md p-3 sm:p-4 rounded-xl border border-white/10 shadow-2xl">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg bg-[#20392C] text-[#C5A56A] flex items-center justify-center border border-[#C5A56A]/40 shadow-inner">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
           </div>
           <div>
-            <h1 className="font-serif text-lg sm:text-2xl font-bold tracking-wider text-[#F4F1E8]">
+            <h1 className="font-serif text-base sm:text-2xl font-bold tracking-wider text-[#F4F1E8]">
               CINEMATIC TIME MACHINE
             </h1>
-            <p className="text-[10px] font-mono text-[#A4ADA5] uppercase tracking-wider">
-              Documented Eras of Kalakote &bull; Chapter {currentIndex + 1} of {TIME_MACHINE_CHAPTERS.length}
+            <p className="text-[9px] sm:text-[10px] font-mono text-[#A4ADA5] uppercase tracking-wider">
+              Documented Eras &bull; Chapter {currentIndex + 1} of {TIME_MACHINE_CHAPTERS.length}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Audio Atmosphere Indicator */}
           <button
             onClick={toggleAudio}
-            className={`px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-all shadow-md ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-all shadow-md ${
               isAudioEnabled
                 ? 'bg-[#20392C] text-[#C5A56A] border-[#C5A56A]'
                 : 'bg-black/40 text-white/50 border-white/10 hover:text-white'
             }`}
             title="Toggle Synthesized Mountain Wind Atmosphere"
           >
-            {isAudioEnabled ? <Volume2 className="w-4 h-4 animate-bounce" /> : <VolumeX className="w-4 h-4" />}
+            {isAudioEnabled ? <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-bounce" /> : <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             <span className="hidden sm:inline">
               {isAudioEnabled ? 'Mountain Ambiance On' : 'Ambiance Muted'}
             </span>
@@ -260,23 +260,23 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
           {/* Source Drawer Toggle */}
           <button
             onClick={() => setIsSourcePanelOpen(!isSourcePanelOpen)}
-            className={`px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-all ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 transition-all ${
               isSourcePanelOpen
                 ? 'bg-[#C5A56A] text-[#080B09] font-bold border-[#C5A56A]'
                 : 'bg-black/40 text-white/70 border-white/10 hover:text-white hover:bg-white/5'
             }`}
           >
-            <BookOpen className="w-4 h-4" />
+            <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Evidence Drawer</span>
           </button>
 
           {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
-            className="p-2 rounded-lg bg-black/40 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg bg-black/40 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
             title="Toggle Fullscreen"
           >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
           </button>
         </div>
       </div>
@@ -284,7 +284,7 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
       {/* Main Cinematic Visual & Narrative Stage */}
       <div
         ref={visualStageRef}
-        className="relative z-10 flex-1 my-5 rounded-2xl overflow-hidden border border-[#C5A56A]/30 bg-black flex flex-col justify-end p-6 sm:p-10 shadow-2xl min-h-[480px]"
+        className="relative z-10 flex-1 my-3 sm:my-5 rounded-2xl overflow-hidden border border-[#C5A56A]/30 bg-black flex flex-col justify-end p-4 sm:p-10 shadow-2xl min-h-[440px] sm:min-h-[520px]"
       >
         {/* Layer 0: Sky Gradient */}
         <div
@@ -456,36 +456,36 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent pointer-events-none" />
 
         {/* Narrative Box Overlay */}
-        <div className="relative z-20 max-w-3xl space-y-4 animate-fadeIn">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3 py-1 rounded-full bg-black/80 border border-[#C5A56A]/60 text-[#C5A56A] font-mono text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-xl">
-              <Calendar className="w-3.5 h-3.5" />
+        <div className="relative z-20 max-w-3xl space-y-3 sm:space-y-4 animate-fadeIn">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <span className="px-2.5 sm:px-3 py-1 rounded-full bg-black/80 border border-[#C5A56A]/60 text-[#C5A56A] font-mono text-[11px] sm:text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-xl">
+              <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               {currentChapter.timeSpan}
             </span>
             <VerificationBadge status={currentChapter.evidenceLabel} size="md" />
-            <span className="text-xs font-mono text-white/60">
+            <span className="text-[11px] sm:text-xs font-mono text-white/60">
               Era #{currentChapter.eraNumber}: {currentChapter.eraName}
             </span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#F4F1E8] drop-shadow-xl">
+          <h2 className="font-serif text-2xl xs:text-3xl sm:text-5xl font-bold text-[#F4F1E8] drop-shadow-xl leading-tight">
             {currentChapter.title}
           </h2>
 
-          <p className="font-serif italic text-base sm:text-lg text-[#C5A56A] drop-shadow">
+          <p className="font-serif italic text-sm sm:text-lg text-[#C5A56A] drop-shadow">
             {currentChapter.subtitle}
           </p>
 
-          <p className="font-sans text-sm sm:text-base text-[#F4F1E8]/95 leading-relaxed bg-black/60 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/10 shadow-2xl">
+          <p className="font-sans text-xs sm:text-base text-[#F4F1E8]/95 leading-relaxed bg-black/60 backdrop-blur-md p-3.5 sm:p-5 rounded-xl border border-white/10 shadow-2xl">
             {currentChapter.narrative}
           </p>
 
           {/* Key Evidential Facts */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-xs font-mono">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 sm:pt-2 text-[11px] sm:text-xs font-mono">
             {currentChapter.keyFacts.map((fact, idx) => (
               <div
                 key={idx}
-                className="p-2.5 rounded-lg bg-black/60 border border-white/5 text-[#A4ADA5] flex items-start gap-2 shadow-sm"
+                className="p-2 sm:p-2.5 rounded-lg bg-black/60 border border-white/5 text-[#A4ADA5] flex items-start gap-2 shadow-sm"
               >
                 <span className="text-[#C5A56A] font-bold">&bull;</span>
                 <span>{fact}</span>
@@ -494,17 +494,18 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
           </div>
 
           {/* Verification & Audio Indicator */}
-          <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-white/50">
-            <span>
-              Atmospheric Soundscape: <em>{currentChapter.landscapeLayer.ambientSoundLabel}</em>
+          <div className="pt-1 sm:pt-2 flex flex-wrap items-center justify-between gap-2 sm:gap-3 text-[10px] sm:text-[11px] font-mono text-white/50">
+            <span className="truncate max-w-[280px] sm:max-w-none">
+              Soundscape: <em>{currentChapter.landscapeLayer.ambientSoundLabel}</em>
             </span>
-            <div className="flex items-center gap-2">
-              <span>Primary Documentary Evidence:</span>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="hidden xs:inline">Documentary Evidence:</span>
+              <span className="xs:hidden">Evidence:</span>
               {currentChapter.primarySources.map((srcId) => (
                 <button
                   key={srcId}
                   onClick={() => onOpenSourceModal(srcId)}
-                  className="px-2 py-0.5 rounded bg-[#20392C] text-[#C5A56A] hover:underline border border-[#C5A56A]/30 transition-colors"
+                  className="px-1.5 sm:px-2 py-0.5 rounded bg-[#20392C] text-[#C5A56A] hover:underline border border-[#C5A56A]/30 transition-colors text-[10px] sm:text-xs"
                 >
                   {srcId}
                 </button>
@@ -514,16 +515,17 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
         </div>
 
         {/* Mandatory Reconstruction Badge */}
-        <div className="absolute top-4 right-4 z-20">
-          <span className="px-3 py-1 bg-black/85 backdrop-blur-md rounded-full text-[10px] font-mono text-amber-300 border border-amber-500/40 uppercase tracking-wider flex items-center gap-1.5 shadow-xl">
-            <Info className="w-3.5 h-3.5" />
-            HISTORICAL RECONSTRUCTION — NOT AN ORIGINAL ARCHIVAL IMAGE
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 max-w-[calc(100%-1.5rem)]">
+          <span className="px-2.5 py-1 bg-black/85 backdrop-blur-md rounded-full text-[9px] sm:text-[10px] font-mono text-amber-300 border border-amber-500/40 uppercase tracking-wider flex items-center gap-1.5 shadow-xl">
+            <Info className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+            <span className="sm:hidden">RECONSTRUCTION &bull; NON-ARCHIVAL</span>
+            <span className="hidden sm:inline">HISTORICAL RECONSTRUCTION — NOT AN ORIGINAL ARCHIVAL IMAGE</span>
           </span>
         </div>
       </div>
 
       {/* Bottom Controls Stage: Scrubber, Controls & Progression */}
-      <div className="relative z-20 space-y-4 bg-black/70 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-2xl">
+      <div className="relative z-20 space-y-3 sm:space-y-4 bg-black/70 backdrop-blur-md p-3 sm:p-4 rounded-xl border border-white/10 shadow-2xl">
         {/* Continuous Autoplay Progress Bar */}
         {isPlaying && (
           <div className="w-full h-1 bg-black/60 rounded-full overflow-hidden border border-white/5">
@@ -535,7 +537,7 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
         )}
 
         {/* Timeline Era Nodes Scrubber */}
-        <div className="relative flex items-center justify-between gap-1 overflow-x-auto pb-2">
+        <div className="relative flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
           {TIME_MACHINE_CHAPTERS.map((ch, idx) => (
             <button
               key={ch.id}
@@ -543,14 +545,14 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
                 setCurrentIndex(idx);
                 setProgressPercent(0);
               }}
-              className={`flex-1 min-w-[75px] text-left p-2.5 rounded-lg border transition-all ${
+              className={`shrink-0 w-24 sm:w-auto sm:flex-1 text-left p-2 sm:p-2.5 rounded-lg border transition-all ${
                 currentIndex === idx
-                  ? 'bg-[#C5A56A] text-[#080B09] border-[#C5A56A] font-bold shadow-xl scale-105'
+                  ? 'bg-[#C5A56A] text-[#080B09] border-[#C5A56A] font-bold shadow-xl scale-[1.02]'
                   : 'bg-black/40 text-white/50 border-white/5 hover:border-white/20 hover:text-white'
               }`}
             >
-              <div className="text-[10px] font-mono">#{ch.eraNumber}</div>
-              <div className="text-[11px] font-serif truncate">{ch.timeSpan}</div>
+              <div className="text-[9px] sm:text-[10px] font-mono">#{ch.eraNumber}</div>
+              <div className="text-[10px] sm:text-[11px] font-serif truncate">{ch.timeSpan}</div>
             </button>
           ))}
         </div>
@@ -576,15 +578,15 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
         </div>
 
         {/* Playback Buttons & Accessibility Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
-          <div className="flex items-center gap-2 font-mono text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 pt-1">
+          <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-xs">
             <button
               onClick={() => {
                 setCurrentIndex((prev) => Math.max(0, prev - 1));
                 setProgressPercent(0);
               }}
               disabled={currentIndex === 0}
-              className="p-2 rounded-lg bg-[#111713] hover:bg-[#20392C] border border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg bg-[#111713] hover:bg-[#20392C] border border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               title="Previous Chapter (Left Arrow Key)"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -592,7 +594,7 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
 
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="px-4 py-2 rounded-lg bg-[#C5A56A] hover:bg-[#DFC38E] text-[#080B09] font-bold flex items-center gap-1.5 transition-colors shadow-lg"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#C5A56A] hover:bg-[#DFC38E] text-[#080B09] font-bold flex items-center gap-1.5 transition-colors shadow-lg text-xs sm:text-sm"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               <span>{isPlaying ? 'Pause' : 'Autoplay'}</span>
@@ -604,7 +606,7 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
                 setProgressPercent(0);
               }}
               disabled={currentIndex === TIME_MACHINE_CHAPTERS.length - 1}
-              className="p-2 rounded-lg bg-[#111713] hover:bg-[#20392C] border border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg bg-[#111713] hover:bg-[#20392C] border border-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               title="Next Chapter (Right Arrow Key)"
             >
               <ChevronRight className="w-4 h-4" />
@@ -616,14 +618,14 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
                 setIsPlaying(false);
                 setProgressPercent(0);
               }}
-              className="p-2 rounded-lg bg-[#111713] hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
+              className="p-1.5 sm:p-2 rounded-lg bg-[#111713] hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
               title="Reset Timeline to Era #1"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-mono text-white/50">
+          <div className="flex items-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-mono text-white/50">
             <label className="flex items-center gap-1.5 cursor-pointer">
               <input
                 type="checkbox"
@@ -633,7 +635,7 @@ export const TimeMachine: React.FC<TimeMachineProps> = ({ onOpenSourceModal }) =
               />
               <span>Reduced Motion</span>
             </label>
-            <span className="hidden md:inline">&larr; &rarr; Arrow Keys to Scrub &bull; Space to Pause</span>
+            <span className="hidden md:inline">&larr; &rarr; Arrow Keys &bull; Space to Pause</span>
           </div>
         </div>
       </div>

@@ -29,46 +29,46 @@ export const Home: React.FC<HomeProps> = ({ onOpenSourceModal }) => {
         <div className="absolute inset-0 film-grain opacity-30 z-0 pointer-events-none" />
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-24 space-y-6 pointer-events-none">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-[#C5A56A]/40 text-[#C5A56A] text-xs font-mono tracking-widest uppercase shadow-2xl animate-fadeIn pointer-events-auto">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Independent Digital Archive &bull; Rajouri, Jammu & Kashmir</span>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16 sm:py-24 space-y-4 sm:space-y-6 pointer-events-none">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#C5A56A]/40 text-[#C5A56A] text-[10px] sm:text-xs font-mono tracking-wider sm:tracking-widest uppercase shadow-2xl animate-fadeIn pointer-events-auto">
+            <Compass className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">Independent Digital Archive &bull; Rajouri, J&K</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#F4F1E8] drop-shadow-2xl">
+          <h1 className="font-serif text-3xl xs:text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#F4F1E8] drop-shadow-2xl leading-tight">
             KALAKOTE OVERLOOK
           </h1>
 
-          <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-[#C5A56A] max-w-3xl mx-auto drop-shadow-lg">
+          <p className="font-serif italic text-base sm:text-2xl md:text-3xl text-[#C5A56A] max-w-3xl mx-auto drop-shadow-lg leading-snug">
             "Every Mountain Has a Story. Every Era Leaves a Mark."
           </p>
 
-          <p className="font-sans text-sm sm:text-base md:text-lg text-[#A4ADA5] max-w-2xl mx-auto leading-relaxed drop-shadow">
+          <p className="font-sans text-xs sm:text-base md:text-lg text-[#A4ADA5] max-w-2xl mx-auto leading-relaxed drop-shadow px-2">
             Explore the history, Subathu coalfields, Czechoslovakian thermal station, administrative agitations, people, and verified transformations of Kalakote, Rajouri district.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 pointer-events-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-4 pt-2 pointer-events-auto max-w-md sm:max-w-none mx-auto w-full">
             <Link
               to="/history"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-[#C5A56A] text-[#080B09] font-mono text-xs sm:text-sm font-bold tracking-wider hover:bg-[#DFC38E] transition-all shadow-xl flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3 rounded-lg bg-[#C5A56A] text-[#080B09] font-mono text-xs sm:text-sm font-bold tracking-wider hover:bg-[#DFC38E] transition-all shadow-xl flex items-center justify-center gap-2"
             >
               <span>EXPLORE THE HISTORY</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 shrink-0" />
             </Link>
 
             <Link
               to="/time-machine"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-[#20392C]/90 hover:bg-[#20392C] text-[#F4F1E8] border border-[#C5A56A]/40 font-mono text-xs sm:text-sm tracking-wider transition-all shadow-xl flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3 rounded-lg bg-[#20392C]/90 hover:bg-[#20392C] text-[#F4F1E8] border border-[#C5A56A]/40 font-mono text-xs sm:text-sm tracking-wider transition-all shadow-xl flex items-center justify-center gap-2"
             >
-              <Clock className="w-4 h-4 text-[#C5A56A]" />
+              <Clock className="w-4 h-4 text-[#C5A56A] shrink-0" />
               <span>TIME MACHINE (2.5D)</span>
             </Link>
 
             <Link
               to="/artifacts-3d"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-black/75 hover:bg-black text-[#F4F1E8] border border-[#C5A56A]/50 font-mono text-xs sm:text-sm tracking-wider transition-all shadow-xl flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-3 rounded-lg bg-black/75 hover:bg-black text-[#F4F1E8] border border-[#C5A56A]/50 font-mono text-xs sm:text-sm tracking-wider transition-all shadow-xl flex items-center justify-center gap-2"
             >
-              <Box className="w-4 h-4 text-[#C5A56A]" />
+              <Box className="w-4 h-4 text-[#C5A56A] shrink-0" />
               <span>3D RELICS & GYRO</span>
             </Link>
           </div>
