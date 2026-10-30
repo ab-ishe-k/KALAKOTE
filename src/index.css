@@ -9,8 +9,8 @@
 body {
   margin: 0;
   font-family: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #080B09;
-  color: #F4F1E8;
+  background-color: #0F1318;
+  color: #F8F9FA;
   overflow-x: hidden;
 }
 
@@ -21,16 +21,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #080B09;
+  background: #0F1318;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #20392C;
+  background: #242D38;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5A56A;
+  background: #D4AF37;
 }
 
 /* Reduced motion preference */

@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useDeviceMotion } from '../../hooks/useDeviceMotion';
-import { Compass, Smartphone, Eye } from 'lucide-react';
+import { Compass, Smartphone, Eye, Flame, Layers } from 'lucide-react';
 
 export const Hero3DCanvas: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const motion = useDeviceMotion();
   const [motionMode, setMotionMode] = useState<boolean>(true);
   const [hasWebGL, setHasWebGL] = useState<boolean>(true);
+  const [wireframeMode, setWireframeMode] = useState<boolean>(false);
 
   // References for Three.js objects
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const terrainMeshRef = useRef<THREE.Mesh | null>(null);
+  const coalMeshRef = useRef<THREE.Mesh | null>(null);
   const wireframeMeshRef = useRef<THREE.LineSegments | null>(null);
+  const terrainMeshRef = useRef<THREE.Mesh | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
   const animFrameRef = useRef<number | null>(null);
 
@@ -37,14 +39,14 @@ export const Hero3DCanvas: React.FC = () => {
       return;
     }
 
-    // 1. Scene
+    // 1. Scene with Slate Atmosphere
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x080B09, 0.035);
+    scene.fog = new THREE.FogExp2(0x0F1318, 0.038);
     sceneRef.current = scene;
 
-    // 2. Camera
-    const camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 100);
-    camera.position.set(0, 4.5, 9);
+    // 2. Camera setup
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+    camera.position.set(0, 1.2, 7.8);
     camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
 
@@ -52,98 +54,113 @@ export const Hero3DCanvas: React.FC = () => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. Lighting
-    const ambientLight = new THREE.AmbientLight(0x20392C, 1.2);
+    // 4. Dramatic Studio Lighting for Coal & Mountains
+    const ambientLight = new THREE.AmbientLight(0x1F2937, 1.8);
     scene.add(ambientLight);
 
-    const goldSpotlight = new THREE.DirectionalLight(0xC5A56A, 2.5);
-    goldSpotlight.position.set(5, 8, 5);
-    scene.add(goldSpotlight);
+    // Warm Golden Ember Spotlight (reflecting Kalakote coal heat)
+    const goldSpot = new THREE.SpotLight(0xF59E0B, 4.5, 25, Math.PI / 4, 0.4);
+    goldSpot.position.set(4.5, 6, 6);
+    scene.add(goldSpot);
 
-    const rimLight = new THREE.DirectionalLight(0x4ECCA3, 1.2);
-    rimLight.position.set(-6, 3, -4);
-    scene.add(rimLight);
+    // Cool Slate Cyan Rim Light (for sub-metallic anthracite reflection)
+    const coolRim = new THREE.DirectionalLight(0x38BDF8, 2.2);
+    coolRim.position.set(-6, 3, -4);
+    scene.add(coolRim);
 
-    // 5. Procedural Pir Panjal Mountain Terrain
-    const terrainWidth = 24;
-    const terrainHeight = 24;
-    const segments = 64;
-    const terrainGeo = new THREE.PlaneGeometry(terrainWidth, terrainHeight, segments, segments);
-    terrainGeo.rotateX(-Math.PI / 2.2);
+    // Back Warm Sun Rim
+    const backRim = new THREE.DirectionalLight(0xD4AF37, 2.0);
+    backRim.position.set(0, -4, -5);
+    scene.add(backRim);
 
-    const pos = terrainGeo.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      const vx = pos.getX(i);
-      const vz = pos.getZ(i);
+    // 5. 🪨 THE HERO 3D ANTHRACITE COAL ORE (Procedural Fractured Mineral)
+    // Detailed Dodecahedron deformed with noise-like displacement to create faceted coal rock
+    const coalGeo = new THREE.DodecahedronGeometry(2.0, 2);
+    const coalPos = coalGeo.attributes.position;
+    for (let i = 0; i < coalPos.count; i++) {
+      const vx = coalPos.getX(i);
+      const vy = coalPos.getY(i);
+      const vz = coalPos.getZ(i);
 
-      // Simulating Pir Panjal mountain ridges and Kalakote valley
+      // Fractured geological cleavage displacement
+      const noise =
+        Math.sin(vx * 3.5) * Math.cos(vy * 3.2) * 0.28 +
+        Math.sin(vz * 5.0 + vx * 2.0) * 0.18 +
+        (Math.random() - 0.5) * 0.08;
+
+      coalPos.setXYZ(i, vx + vx * noise, vy + vy * noise, vz + vz * noise);
+    }
+    coalGeo.computeVertexNormals();
+
+    // Semi-metallic glossy Anthracite Material
+    const coalMat = new THREE.MeshStandardMaterial({
+      color: 0x11161B,         // Rich deep graphite / anthracite black
+      roughness: 0.38,         // Vitreous sub-metallic fracture lustre
+      metalness: 0.65,         // Natural sheen of high-grade Kalakote semi-anthracite
+      flatShading: true
+    });
+    const coalMesh = new THREE.Mesh(coalGeo, coalMat);
+    coalMesh.position.set(0, 0.1, 0);
+    scene.add(coalMesh);
+    coalMeshRef.current = coalMesh;
+
+    // Glowing Mineral Cleavage Wireframe
+    const coalWireGeo = new THREE.WireframeGeometry(coalGeo);
+    const coalWireMat = new THREE.LineBasicMaterial({
+      color: 0xF59E0B,
+      transparent: true,
+      opacity: 0.22
+    });
+    const coalWireMesh = new THREE.LineSegments(coalWireGeo, coalWireMat);
+    coalMesh.add(coalWireMesh);
+    wireframeMeshRef.current = coalWireMesh;
+
+    // 6. Subterranean Pir Panjal Base Relief Bed (Background)
+    const terrainGeo = new THREE.PlaneGeometry(30, 20, 36, 24);
+    terrainGeo.rotateX(-Math.PI / 2.3);
+    const tPos = terrainGeo.attributes.position;
+    for (let i = 0; i < tPos.count; i++) {
+      const vx = tPos.getX(i);
+      const vz = tPos.getZ(i);
       const elevation =
-        Math.sin(vx * 0.4) * Math.cos(vz * 0.35) * 1.8 +
-        Math.sin(vx * 0.9 + vz * 0.7) * 0.8 +
-        Math.cos(vx * 1.8) * 0.35 -
-        Math.exp(-((vx * vx + vz * vz) * 0.04)) * 0.8; // Valley dip
-
-      pos.setY(i, elevation);
+        Math.sin(vx * 0.3) * Math.cos(vz * 0.25) * 1.5 +
+        Math.cos(vx * 0.8) * 0.5;
+      tPos.setY(i, elevation - 3.8);
     }
     terrainGeo.computeVertexNormals();
-
-    // Dark Basalt / Carbonaceous Solid Terrain Material
     const terrainMat = new THREE.MeshStandardMaterial({
-      color: 0x0E1410,
-      roughness: 0.85,
-      metalness: 0.25,
+      color: 0x141A22,
+      roughness: 0.9,
+      metalness: 0.2,
       flatShading: true
     });
     const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
-    terrainMesh.position.set(0, -1.2, 0);
     scene.add(terrainMesh);
     terrainMeshRef.current = terrainMesh;
 
-    // Warm Gold Contour Wireframe Mesh
-    const wireframeGeo = new THREE.WireframeGeometry(terrainGeo);
-    const wireframeMat = new THREE.LineBasicMaterial({
-      color: 0xC5A56A,
-      transparent: true,
-      opacity: 0.35
-    });
-    const wireframeMesh = new THREE.LineSegments(wireframeGeo, wireframeMat);
-    wireframeMesh.position.set(0, -1.18, 0);
-    scene.add(wireframeMesh);
-    wireframeMeshRef.current = wireframeMesh;
-
-    // 6. Subathu Geological Coal Stratum (Glowing Carbon Vein)
-    const seamGeo = new THREE.CylinderGeometry(8, 8.5, 0.2, 32, 1, true);
-    const seamMat = new THREE.MeshBasicMaterial({
-      color: 0xD4AF37,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.2
-    });
-    const seamMesh = new THREE.Mesh(seamGeo, seamMat);
-    seamMesh.position.set(0, -1.1, 0);
-    scene.add(seamMesh);
-
-    // 7. Floating 3D Golden Coal Embers / Atmospheric Dust
-    const particleCount = 200;
+    // 7. Floating 3D Golden Embers & Subathu Mineral Micro-Dust
+    const particleCount = 240;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
+    const particleScales = new Float32Array(particleCount);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-      particlePositions[i] = (Math.random() - 0.5) * 16;
-      particlePositions[i + 1] = Math.random() * 6 - 1;
-      particlePositions[i + 2] = (Math.random() - 0.5) * 14;
+      particlePositions[i] = (Math.random() - 0.5) * 14;
+      particlePositions[i + 1] = (Math.random() - 0.5) * 8;
+      particlePositions[i + 2] = (Math.random() - 0.5) * 10;
+      particleScales[i / 3] = Math.random() * 0.08 + 0.03;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0xC5A56A,
-      size: 0.06,
+      color: 0xF59E0B,
+      size: 0.07,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.75,
       blending: THREE.AdditiveBlending
     });
     const particles = new THREE.Points(particleGeo, particleMat);
@@ -161,26 +178,27 @@ export const Hero3DCanvas: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // 9. Animation Loop
+    // 9. Continuous Animation Loop
     let clock = new THREE.Clock();
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
 
-      // Gentle mountain breathing / subtle rotation
-      if (terrainMeshRef.current && wireframeMeshRef.current) {
-        terrainMeshRef.current.rotation.y = elapsedTime * 0.02;
-        wireframeMeshRef.current.rotation.y = elapsedTime * 0.02;
+      // Slow majestic tumbling of the Anthracite Coal Ore
+      if (coalMeshRef.current) {
+        coalMeshRef.current.rotation.y = elapsedTime * 0.18;
+        coalMeshRef.current.rotation.x = Math.sin(elapsedTime * 0.12) * 0.2;
+        coalMeshRef.current.position.y = Math.sin(elapsedTime * 0.6) * 0.12;
       }
 
-      // Embers floating upward
+      // Embers floating upward gently around the coal
       if (particlesRef.current) {
         const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
         for (let i = 1; i < positions.length; i += 3) {
-          positions[i] += 0.004;
-          if (positions[i] > 5) positions[i] = -1.2;
+          positions[i] += 0.006;
+          if (positions[i] > 4.5) positions[i] = -4.0;
         }
         particlesRef.current.geometry.attributes.position.needsUpdate = true;
-        particlesRef.current.rotation.y = -elapsedTime * 0.015;
+        particlesRef.current.rotation.y = elapsedTime * 0.04;
       }
 
       renderer.render(scene, camera);
@@ -197,90 +215,105 @@ export const Hero3DCanvas: React.FC = () => {
         container.removeChild(renderer.domElement);
       }
       renderer.dispose();
+      coalGeo.dispose();
+      coalWireGeo.dispose();
       terrainGeo.dispose();
-      wireframeGeo.dispose();
       particleGeo.dispose();
     };
   }, []);
 
-  // Update Camera based on Gyroscope / Mouse Motion
+  // Wireframe toggle effect
+  useEffect(() => {
+    if (wireframeMeshRef.current) {
+      wireframeMeshRef.current.visible = wireframeMode;
+    }
+  }, [wireframeMode]);
+
+  // Update Camera based on Physical Gyroscope / Mouse Parallax
   useEffect(() => {
     if (!cameraRef.current || !motionMode) return;
 
-    // Motion range: -1 to 1
-    // Base camera position: (0, 4.5, 9)
-    const targetX = motion.x * 2.2;
-    const targetY = 4.5 + motion.y * 1.4;
-    const targetZ = 9 - Math.abs(motion.x) * 0.6;
+    // Smoothly shift camera angle with phone tilt (-1 to 1)
+    const targetX = motion.x * 2.4;
+    const targetY = 1.2 + motion.y * 1.6;
+    const targetZ = 7.8 - Math.abs(motion.x) * 0.8;
 
     cameraRef.current.position.x = targetX;
     cameraRef.current.position.y = targetY;
     cameraRef.current.position.z = targetZ;
-    cameraRef.current.lookAt(motion.x * 0.6, -0.6, 0);
+    cameraRef.current.lookAt(motion.x * 0.3, 0.1, 0);
   }, [motion.x, motion.y, motionMode]);
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-auto overflow-hidden">
-      {/* Three.js Canvas Container or SVG Fallback */}
+      {/* Three.js Canvas Container or Clean Fallback */}
       {hasWebGL ? (
         <div ref={mountRef} className="w-full h-full" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-b from-[#111713] via-[#0E1410] to-[#080B09] flex items-center justify-center">
-          <svg className="w-full h-full opacity-30" viewBox="0 0 1440 900" preserveAspectRatio="none">
-            <path d="M0 450 Q360 280 720 420 T1440 380 L1440 900 L0 900 Z" fill="#20392C" />
-            <path d="M0 560 Q400 440 850 540 T1440 500 L1440 900 L0 900 Z" fill="#172b21" />
-            <path d="M0 690 Q500 600 1000 670 T1440 640 L1440 900 L0 900 Z" fill="#080b09" />
-          </svg>
+        <div className="w-full h-full bg-gradient-to-b from-[#171C23] via-[#12161D] to-[#0F1318] flex items-center justify-center">
+          <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-amber-500/20 to-sky-500/20 border border-amber-500/30 flex items-center justify-center">
+            <Flame className="w-16 h-16 text-amber-400 animate-pulse" />
+          </div>
         </div>
       )}
 
-      {/* Sensor Calibration & Status Badge (Positioned safely at bottom on mobile, top-right on desktop) */}
+      {/* Sensor Calibration & Status Badge */}
       <div className="absolute bottom-4 right-4 sm:bottom-auto sm:top-24 sm:right-8 z-20 flex flex-col items-end gap-1.5 font-mono text-[11px]">
-        {/* iOS Permission Prompt if needed */}
+        {/* iOS Permission Prompt */}
         {motion.requiresPermissionPrompt && !motion.permissionGranted && (
           <button
             onClick={() => motion.requestPermission()}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#C5A56A] text-black font-semibold shadow-lg hover:bg-white transition-all animate-bounce text-xs"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-[#D4AF37] text-[#0F1318] font-bold shadow-xl hover:brightness-110 transition-all animate-bounce text-xs"
           >
             <Smartphone className="w-3.5 h-3.5" />
-            <span>Enable 3D Gyroscope</span>
+            <span>Enable 3D Coal Gyroscope</span>
           </button>
         )}
 
         {/* Live Motion Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#C5A56A]/30 text-white/80 shadow-xl">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#171C23]/85 backdrop-blur-md border border-[#D4AF37]/35 text-white/90 shadow-2xl">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
           {motion.isMobile ? (
-            <span className="flex items-center gap-1.5 text-[#C5A56A] text-[10px] sm:text-xs">
+            <span className="flex items-center gap-1.5 text-amber-300 text-[10px] sm:text-xs">
               <Compass className="w-3.5 h-3.5 shrink-0" />
-              <span>Gyro: {motion.gamma > 0 ? `+${motion.gamma.toFixed(0)}°` : `${motion.gamma.toFixed(0)}°`}</span>
+              <span>Coal Tilt: {motion.gamma > 0 ? `+${motion.gamma.toFixed(0)}°` : `${motion.gamma.toFixed(0)}°`}</span>
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-[#C5A56A] text-[10px] sm:text-xs">
+            <span className="flex items-center gap-1.5 text-amber-300 text-[10px] sm:text-xs">
               <Eye className="w-3.5 h-3.5 shrink-0" />
-              <span>3D Parallax Active</span>
+              <span>3D Motion Parallax</span>
             </span>
           )}
 
-          {/* Toggle Button */}
+          {/* Wireframe Cleavage Toggle */}
+          <button
+            onClick={() => setWireframeMode(!wireframeMode)}
+            className="ml-1 text-sky-400 hover:text-sky-300 text-[10px] uppercase border-l border-white/15 pl-2 flex items-center gap-1"
+            title="Toggle Mineral Strata Wireframe"
+          >
+            <Layers className="w-3 h-3" />
+            <span className="hidden sm:inline">{wireframeMode ? 'Solid' : 'Strata'}</span>
+          </button>
+
+          {/* Motion Toggle Button */}
           <button
             onClick={() => setMotionMode(!motionMode)}
-            className="ml-1 text-white/50 hover:text-white text-[10px] uppercase border-l border-white/20 pl-2"
+            className="text-white/60 hover:text-white text-[10px] uppercase border-l border-white/15 pl-2"
             title="Toggle camera motion"
           >
             {motionMode ? 'Pause' : 'Resume'}
           </button>
         </div>
 
-        {/* Subtle Hint - hidden on small mobile to avoid visual clutter */}
-        <span className="hidden sm:inline-block text-[10px] text-white/50 bg-black/40 px-2 py-0.5 rounded backdrop-blur-sm">
-          {motion.isMobile ? 'Tilt your device in 3D' : 'Move cursor across Pir Panjal relief'}
+        {/* Informative Sub-label */}
+        <span className="hidden sm:inline-block text-[10px] text-white/60 bg-[#171C23]/70 px-2.5 py-0.5 rounded border border-white/5 backdrop-blur-sm">
+          {motion.isMobile ? 'Tilt phone to inspect Kalakote Anthracite cleavage' : 'Move cursor to rotate 3D Anthracite specimen'}
         </span>
       </div>
 
-      {/* Gradient Overlay for Editorial Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#080B09] via-transparent to-[#080B09]/70 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#080B09]/40 to-[#080B09]/90 pointer-events-none" />
+      {/* Atmospheric Slate Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0F1318] via-transparent to-[#0F1318]/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#0F1318]/30 to-[#0F1318]/85 pointer-events-none" />
     </div>
   );
 };
