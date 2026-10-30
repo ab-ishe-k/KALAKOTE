@@ -39,9 +39,9 @@ export const Hero3DCanvas: React.FC = () => {
       return;
     }
 
-    // 1. Scene with Slate Atmosphere
+    // 1. Scene with Clean Light Slate Atmosphere
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x0F1318, 0.038);
+    scene.fog = new THREE.FogExp2(0xF8FAFC, 0.032);
     sceneRef.current = scene;
 
     // 2. Camera setup
@@ -54,27 +54,27 @@ export const Hero3DCanvas: React.FC = () => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.35;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. Dramatic Studio Lighting for Coal & Mountains
-    const ambientLight = new THREE.AmbientLight(0x1F2937, 1.8);
+    // 4. Bright Studio Lighting for High-Contrast Black Coal Ore
+    const ambientLight = new THREE.AmbientLight(0xE2E8F0, 2.4);
     scene.add(ambientLight);
 
-    // Warm Golden Ember Spotlight (reflecting Kalakote coal heat)
-    const goldSpot = new THREE.SpotLight(0xF59E0B, 4.5, 25, Math.PI / 4, 0.4);
-    goldSpot.position.set(4.5, 6, 6);
+    // Warm Sun Spotlight
+    const goldSpot = new THREE.SpotLight(0xD97706, 5.0, 30, Math.PI / 4, 0.3);
+    goldSpot.position.set(5, 8, 7);
     scene.add(goldSpot);
 
-    // Cool Slate Cyan Rim Light (for sub-metallic anthracite reflection)
-    const coolRim = new THREE.DirectionalLight(0x38BDF8, 2.2);
-    coolRim.position.set(-6, 3, -4);
-    scene.add(coolRim);
+    // Crisp Sky Blue Fill Light
+    const skyFill = new THREE.DirectionalLight(0x0284C7, 2.5);
+    skyFill.position.set(-6, 4, 3);
+    scene.add(skyFill);
 
-    // Back Warm Sun Rim
-    const backRim = new THREE.DirectionalLight(0xD4AF37, 2.0);
-    backRim.position.set(0, -4, -5);
+    // Back Light to highlight jet black coal silhouette
+    const backRim = new THREE.DirectionalLight(0xF59E0B, 3.0);
+    backRim.position.set(0, -3, -6);
     scene.add(backRim);
 
     // 5. 🪨 THE HERO 3D ANTHRACITE COAL ORE (Procedural Fractured Mineral)
@@ -133,9 +133,9 @@ export const Hero3DCanvas: React.FC = () => {
     }
     terrainGeo.computeVertexNormals();
     const terrainMat = new THREE.MeshStandardMaterial({
-      color: 0x141A22,
-      roughness: 0.9,
-      metalness: 0.2,
+      color: 0xE2E8F0,         // Clean crisp slate mountain relief
+      roughness: 0.85,
+      metalness: 0.1,
       flatShading: true
     });
     const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
@@ -146,22 +146,19 @@ export const Hero3DCanvas: React.FC = () => {
     const particleCount = 240;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
-    const particleScales = new Float32Array(particleCount);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
       particlePositions[i] = (Math.random() - 0.5) * 14;
       particlePositions[i + 1] = (Math.random() - 0.5) * 8;
       particlePositions[i + 2] = (Math.random() - 0.5) * 10;
-      particleScales[i / 3] = Math.random() * 0.08 + 0.03;
     }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0xF59E0B,
-      size: 0.07,
+      color: 0xD97706,
+      size: 0.08,
       transparent: true,
-      opacity: 0.75,
-      blending: THREE.AdditiveBlending
+      opacity: 0.85
     });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
@@ -250,9 +247,9 @@ export const Hero3DCanvas: React.FC = () => {
       {hasWebGL ? (
         <div ref={mountRef} className="w-full h-full" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-b from-[#171C23] via-[#12161D] to-[#0F1318] flex items-center justify-center">
-          <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-amber-500/20 to-sky-500/20 border border-amber-500/30 flex items-center justify-center">
-            <Flame className="w-16 h-16 text-amber-400 animate-pulse" />
+        <div className="w-full h-full bg-gradient-to-b from-slate-100 via-slate-50 to-white flex items-center justify-center">
+          <div className="w-48 h-48 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+            <Flame className="w-16 h-16 text-amber-600 animate-pulse" />
           </div>
         </div>
       )}
@@ -263,7 +260,7 @@ export const Hero3DCanvas: React.FC = () => {
         {motion.requiresPermissionPrompt && !motion.permissionGranted && (
           <button
             onClick={() => motion.requestPermission()}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-[#D4AF37] text-[#0F1318] font-bold shadow-xl hover:brightness-110 transition-all animate-bounce text-xs"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold shadow-lg hover:brightness-110 transition-all animate-bounce text-xs"
           >
             <Smartphone className="w-3.5 h-3.5" />
             <span>Enable 3D Coal Gyroscope</span>
@@ -271,16 +268,16 @@ export const Hero3DCanvas: React.FC = () => {
         )}
 
         {/* Live Motion Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#171C23]/85 backdrop-blur-md border border-[#D4AF37]/35 text-white/90 shadow-2xl">
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-300 text-slate-800 shadow-md">
+          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
           {motion.isMobile ? (
-            <span className="flex items-center gap-1.5 text-amber-300 text-[10px] sm:text-xs">
-              <Compass className="w-3.5 h-3.5 shrink-0" />
+            <span className="flex items-center gap-1.5 text-amber-800 font-semibold text-[10px] sm:text-xs">
+              <Compass className="w-3.5 h-3.5 shrink-0 text-amber-600" />
               <span>Coal Tilt: {motion.gamma > 0 ? `+${motion.gamma.toFixed(0)}°` : `${motion.gamma.toFixed(0)}°`}</span>
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-amber-300 text-[10px] sm:text-xs">
-              <Eye className="w-3.5 h-3.5 shrink-0" />
+            <span className="flex items-center gap-1.5 text-slate-800 font-semibold text-[10px] sm:text-xs">
+              <Eye className="w-3.5 h-3.5 shrink-0 text-amber-600" />
               <span>3D Motion Parallax</span>
             </span>
           )}
@@ -288,17 +285,17 @@ export const Hero3DCanvas: React.FC = () => {
           {/* Wireframe Cleavage Toggle */}
           <button
             onClick={() => setWireframeMode(!wireframeMode)}
-            className="ml-1 text-sky-400 hover:text-sky-300 text-[10px] uppercase border-l border-white/15 pl-2 flex items-center gap-1"
+            className="ml-1 text-sky-700 hover:text-sky-900 text-[10px] uppercase border-l border-slate-300 pl-2 flex items-center gap-1 font-semibold"
             title="Toggle Mineral Strata Wireframe"
           >
-            <Layers className="w-3 h-3" />
+            <Layers className="w-3 h-3 text-sky-600" />
             <span className="hidden sm:inline">{wireframeMode ? 'Solid' : 'Strata'}</span>
           </button>
 
           {/* Motion Toggle Button */}
           <button
             onClick={() => setMotionMode(!motionMode)}
-            className="text-white/60 hover:text-white text-[10px] uppercase border-l border-white/15 pl-2"
+            className="text-slate-500 hover:text-slate-800 text-[10px] uppercase border-l border-slate-300 pl-2 font-semibold"
             title="Toggle camera motion"
           >
             {motionMode ? 'Pause' : 'Resume'}
@@ -306,14 +303,13 @@ export const Hero3DCanvas: React.FC = () => {
         </div>
 
         {/* Informative Sub-label */}
-        <span className="hidden sm:inline-block text-[10px] text-white/60 bg-[#171C23]/70 px-2.5 py-0.5 rounded border border-white/5 backdrop-blur-sm">
+        <span className="hidden sm:inline-block text-[10px] text-slate-600 bg-white/80 px-2.5 py-0.5 rounded border border-slate-200 shadow-sm backdrop-blur-sm">
           {motion.isMobile ? 'Tilt phone to inspect Kalakote Anthracite cleavage' : 'Move cursor to rotate 3D Anthracite specimen'}
         </span>
       </div>
 
-      {/* Atmospheric Slate Vignette */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0F1318] via-transparent to-[#0F1318]/60 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#0F1318]/30 to-[#0F1318]/85 pointer-events-none" />
+      {/* Atmospheric Soft Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#F8FAFC]/40 pointer-events-none" />
     </div>
   );
 };

@@ -9,20 +9,20 @@ export default {
     extend: {
       colors: {
         brand: {
-          bg: '#0F1318',             // Refined Deep Charcoal Slate (replaces muddy pitch black #080B09)
-          surface: '#171C23',        // Elevated Card Surface
-          card: '#1F2630',           // Interactive Card Hover/Focus
-          forest: '#20392C',
-          forestDark: '#172B21',
-          gold: '#D4AF37',           // Vibrant Warm Heritage Gold
-          goldLight: '#ECD078',      // Bright Amber Gold
-          goldDark: '#A68424',
-          cyan: '#38BDF8',           // Tech & Cartographic Accent
-          amber: '#F59E0B',          // Coal Ember Accent
-          text: '#F8F9FA',           // Crisp Ivory White
-          textMuted: '#94A3B8',      // Slate Muted Typography
-          border: 'rgba(255, 255, 255, 0.12)',
-          borderSubtle: 'rgba(255, 255, 255, 0.06)'
+          bg: '#F8FAFC',             // Bright, clean slate-white background
+          surface: '#FFFFFF',        // Pure white card surfaces
+          card: '#F1F5F9',           // Subtle card hover
+          forest: '#166534',         // Deep Emerald/Alpine green
+          forestDark: '#14532D',
+          gold: '#D97706',           // Vibrant Warm Amber-Gold
+          goldLight: '#F59E0B',      // Bright Golden Amber
+          goldDark: '#B45309',       // Deep rich ochre gold
+          cyan: '#0284C7',           // Crisp cartographic sky blue
+          amber: '#EA580C',          // Coal Ember Accent
+          text: '#0F172A',           // Crisp Deep Slate text (Ultra readable)
+          textMuted: '#64748B',      // Refined slate muted body
+          border: 'rgba(15, 23, 42, 0.08)',
+          borderSubtle: 'rgba(15, 23, 42, 0.04)'
         }
       },
       fontFamily: {
